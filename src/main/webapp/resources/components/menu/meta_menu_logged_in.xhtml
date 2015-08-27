@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+    <composite:interface>
+        <composite:attribute name="navBean" type="java.lang.Object" required="true" shortDescription="@type: Object, used for several URL paths"/>
+        <composite:attribute name="userHasAdminRights" type="java.lang.Boolean" default="false" required="false" shortDescription="@type: Boolean, @dependencies: curMainMenu, required for ingest"/>
+    </composite:interface>
+
+    <composite:implementation>
+        <div class="imj_metaMenuStandardSingleLine">
+            <ul role="navigation">
+                
+                <ui:fragment rendered="#{cc.attrs.userHasAdminRights}">
+                    <li class="#{ (cc.attrs.curMainMenu == 'admin') ? ' imj_active' : ''}">
+                        <!-- ADMINISTRATION LINK -->
+                        <a id="lnkAdmin" href="#{cc.attrs.navBean.adminUrl}" class="imj_metaMenuItem" title="#{lbl.goto_admin}">ADMIN</a>
+                    </li>
+                </ui:fragment>
+                <li> <!-- User Profile -->
+                    <a id="txtAccountUserName" href="#{cc.attrs.navBean.applicationSpaceUrl}user?id=#{Auth.sessionUser.email}" class="imj_metaMenuItem" title="#{lbl.goto_user_profile}">#{Auth.sessionUser.name}</a>
+                </li>
+                <li>
+                    <!-- Advanced Search -->
+                    <a href="#{Navigation.searchUrl}" class="imj_simpleSearchLinkAdvancedsearch" title="#{lbl.goto_adv_search}">#{lbl.advanced_search}</a>
+                </li>
+
+                <ui:fragment rendered="#{Configuration.alternativeCss != null and Configuration.alternativeCss != ''}">
+                    <li>
+                        <!-- CSS Switcher -->
+                        <h:form>
+                            <h:commandButton value="&#160;" action="#{SessionBean.toggleCss()}" styleClass="imj_metaMenuItem imj_buttonStyleSwitcher"/>
+                        </h:form>
+                    </li>
+                </ui:fragment>
+
+                <li>
+                    <!-- Help -->
+                    <a id="lnkHelp" href="#{Navigation.helpUrl}" class="imj_metaMenuItem" title="#{lbl.goto_help}" target="_blank">#{lbl.help}</a>
+                </li>
+
+                <li>
+                    <!-- LogOut -->
+                    <a id="lnkLogout" href="#{Navigation.applicationSpaceUrl}login?logout=1" class="imj_metaMenuItem" title="#{lbl.logout}">#{lbl.logout}</a>
+                </li>
+            </ul>
+        </div>
+    </composite:implementation>      
+</html>
