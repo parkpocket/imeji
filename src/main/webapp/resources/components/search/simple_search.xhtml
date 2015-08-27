@@ -1,0 +1,18 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+    <composite:interface>
+        <composite:attribute name="searchBean" type="java.lang.Object" required="true" shortDescription="@type: Object, used for several URL paths"/>
+    </composite:interface>
+
+    <composite:implementation>
+        <div class="imj_simpleSearch imj_clearfix">
+            <h:form>
+                <h:inputText id="quickSearchString" styleClass="imj_simpleSearchInput" value="#{cc.attrs.searchBean.searchString}"/>
+                <h:commandButton id="btnQuickSearchStart" title="#{lbl.search_for}" styleClass="imj_simpleSearchButtonSubmit" value="#{lbl.paginator_go}" action="#{cc.attrs.searchBean.search}"/>
+            </h:form>
+        </div>
+    </composite:implementation>
+</html>

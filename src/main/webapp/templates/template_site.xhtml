@@ -32,7 +32,8 @@ All rights reserved. Use is subject to license terms.
         xmlns:f="http://java.sun.com/jsf/core" 
         xmlns:h="http://java.sun.com/jsf/html" 
         xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:menu="http://java.sun.com/jsf/composite/components/menu">
+        xmlns:menu="http://java.sun.com/jsf/composite/components/menu"
+        xmlns:search="http://java.sun.com/jsf/composite/components/search">
 
     <f:loadBundle var="lbl" basename="labels"/>
     <f:loadBundle var="msg" basename="messages"/>
@@ -50,7 +51,7 @@ All rights reserved. Use is subject to license terms.
                 <ui:include src="component/header/header_default.xhtml"/>
                 
                 <div class="imj_menuPanel">
-                    <ui:include src="component/menu/searchmenu_default.xhtml"/>
+                    <search:simple_search searchBean="#{QuickSearchBean}"/>
                     <menu:working_menu navBean="#{Navigation}" curMainMenu="#{currentMainMenu}" userHasAdminRights="#{Auth.sessionUser.admin}"/>
                 </div>
                 
