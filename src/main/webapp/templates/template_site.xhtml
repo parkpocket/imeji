@@ -51,8 +51,7 @@ All rights reserved. Use is subject to license terms.
                 
                 <div class="imj_menuPanel">
                     <ui:include src="component/menu/searchmenu_default.xhtml"/>
-                    <menu:working_menu navBean="#{Navigation}" curMainMenu="welcome" userHasAdminRights="#{Auth.sessionUser.admin}"/>
-                    
+                    <menu:working_menu navBean="#{Navigation}" curMainMenu="#{currentMainMenu}" userHasAdminRights="#{Auth.sessionUser.admin}"/>
                 </div>
                 
                 <ui:insert name="actionsMenu"/>
