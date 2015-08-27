@@ -41,7 +41,7 @@
         <h:panelGroup layout="block" styleClass="imj_siteHeader">
 
             <!-- import meta menu here -->
-            <menu:meta_menu_logged_in navBean="#{Navigation}" userHasAdminRights="#{Auth.sessionUser.admin}" rendered="#{Auth.loggedIn}"/>
+            <menu:meta_menu_logged_in navBean="#{Navigation}" userHasAdminRights="#{Auth.sessionUser.admin}" rendered="#{Auth.loggedIn}" curMainMenu="#{currentMainMenu}"/>
             <menu:meta_menu_logged_out navBean="#{Navigation}" userHasAdminRights="#{Auth.sessionUser.admin}" rendered="#{!Auth.loggedIn}"/>
 
             <h:outputLink id="lnkStartPage" title="#{lbl.goto_startpage}" value="#{Navigation.homeUrl}">
