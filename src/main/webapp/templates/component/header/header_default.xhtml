@@ -8,7 +8,7 @@
         <!--
         /* 
         CDDL HEADER START
-        
+    
         The contents of this file are subject to the terms of the
         Common Development and Distribution License, Version 1.0 only
         (the "License"). You may not use this file except in compliance
@@ -41,31 +41,26 @@
         <h:panelGroup layout="block" styleClass="imj_siteHeader">
 
             <!-- import meta menu here -->
-            <ui:include src="../menu/metamenu_default.xhtml"/>
+            <menu:meta_menu_logged_in navBean="#{Navigation}" userHasAdminRights="#{Auth.sessionUser.admin}" rendered="#{Auth.loggedIn}"/>
+            <menu:meta_menu_logged_out navBean="#{Navigation}" userHasAdminRights="#{Auth.sessionUser.admin}" rendered="#{!Auth.loggedIn}"/>
 
             <h:outputLink id="lnkStartPage" title="#{lbl.goto_startpage}" value="#{Navigation.homeUrl}">
                 <!-- default imeji logo set in the css -->
                 <h:panelGroup styleClass="imj_logo"
                               rendered="#{(Configuration.logoUrl ==null or Configuration.logoUrl == '') and (SessionBean.spaceId == '' or SessionBean.selectedSpaceLogoURL.trim() == 'null')}" />
+                
                 <!-- custom Logo not recommended -->
-                <h:panelGroup  styleClass="imj_logo_alt" rendered="#{Configuration.logoUrl !=null and Configuration.logoUrl != '' and (SessionBean.spaceId == '' or SessionBean.selectedSpaceLogoURL.trim() == 'null')}" >
+                <h:panelGroup styleClass="imj_logo_alt" rendered="#{Configuration.logoUrl !=null and Configuration.logoUrl != '' and (SessionBean.spaceId == '' or SessionBean.selectedSpaceLogoURL.trim() == 'null')}" >
                     <h:graphicImage value="#{Configuration.logoUrl}" alt="{Configuration.instanceName} Logo" />
                 </h:panelGroup>
+                
                 <!-- space specific logo -->
                 <h:panelGroup styleClass="imj_logo_alt" rendered="#{not (SessionBean.spaceId == '' or SessionBean.selectedSpaceLogoURL.trim() == 'null') }">
                     <h:graphicImage value="#{SessionBean.selectedSpaceLogoURL}" alt="space logo" styleClass="imj_spaceLogo" />
                 </h:panelGroup>
-
+                
+                <span class="imj_slogan">online datahub for all sciences</span>
             </h:outputLink>
-
-            <ui:remove>
-                <div class="imj_siteHeaderMenuSearchSection">
-                    <!-- place main menu here -->
-                    <menu:mainMenu navBean="#{Navigation}" curMainMenu="#{currentMainMenu}" menuClass="imj_mainMenuStandard" userHasAdminRights="#{Auth.admin}"/>
-                    <!-- import search here-->
-                    <ui:include src="../menu/searchmenu_default.xhtml"/>
-                </div>
-            </ui:remove>
         </h:panelGroup>
     </f:subview>
 </ui:composition>
