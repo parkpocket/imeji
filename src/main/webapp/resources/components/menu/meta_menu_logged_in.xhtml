@@ -5,6 +5,7 @@
     <composite:interface>
         <composite:attribute name="navBean" type="java.lang.Object" required="true" shortDescription="@type: Object, used for several URL paths"/>
         <composite:attribute name="userHasAdminRights" type="java.lang.Boolean" default="false" required="false" shortDescription="@type: Boolean, @dependencies: curMainMenu, required for ingest"/>
+        <composite:attribute name="curMainMenu" type="java.lang.String" required="true" shortDescription="@type: String, used to highlight a menu item"/>
     </composite:interface>
 
     <composite:implementation>
@@ -12,14 +13,12 @@
             <ul role="navigation">
                 
                 <ui:fragment rendered="#{cc.attrs.userHasAdminRights}">
-                    <li class="#{ (cc.attrs.curMainMenu == 'admin') ? ' imj_active' : ''}">
+                    <li class="#{ (cc.attrs.curMainMenu == 'admin') ? 'imj_active' : ''}">
                         <!-- ADMINISTRATION LINK -->
                         <a id="lnkAdmin" href="#{cc.attrs.navBean.adminUrl}" class="imj_metaMenuItem" title="#{lbl.goto_admin}">ADMIN</a>
                     </li>
                 </ui:fragment>
-                <li> <!-- User Profile -->
-                    <a id="txtAccountUserName" href="#{cc.attrs.navBean.applicationSpaceUrl}user?id=#{Auth.sessionUser.email}" class="imj_metaMenuItem" title="#{lbl.goto_user_profile}">#{Auth.sessionUser.name}</a>
-                </li>
+                
                 <li>
                     <!-- Advanced Search -->
                     <a href="#{Navigation.searchUrl}" class="imj_simpleSearchLinkAdvancedsearch" title="#{lbl.goto_adv_search}">#{lbl.advanced_search}</a>
@@ -37,6 +36,10 @@
                 <li>
                     <!-- Help -->
                     <a id="lnkHelp" href="#{Navigation.helpUrl}" class="imj_metaMenuItem" title="#{lbl.goto_help}" target="_blank">#{lbl.help}</a>
+                </li>
+                
+                <li> <!-- User Profile -->
+                    <a id="txtAccountUserName" href="#{cc.attrs.navBean.applicationSpaceUrl}user?id=#{Auth.sessionUser.email}" class="imj_metaMenuItem" title="#{lbl.goto_user_profile}">#{Auth.sessionUser.name} <span class="fa fa-cog"> </span></a>
                 </li>
 
                 <li>
