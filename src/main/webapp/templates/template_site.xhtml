@@ -68,7 +68,7 @@ All rights reserved. Use is subject to license terms.
 
                 <div class="imj_menuPanel">
                     <search:simple_search searchBean="#{QuickSearchBean}"/>
-                    <menu:working_menu navBean="#{Navigation}" curMainMenu="#{currentMainMenu}" userHasAdminRights="#{Auth.sessionUser.admin}"/>
+                    <menu:working_menu navBean="#{Navigation}" curMainMenu="#{currentMainMenu}" userHasAdminRights="#{Auth.sessionUser.admin}" rendered="#{Auth.loggedIn}"/>
                 </div>
 
                 <ui:insert name="actionsMenu"/>
