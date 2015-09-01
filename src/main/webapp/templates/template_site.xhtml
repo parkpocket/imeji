@@ -46,15 +46,31 @@ All rights reserved. Use is subject to license terms.
         </h:head>
 
         <h:body lang="#{SessionBean.locale}">
+            <!-- Message Area, e.g. successful login -->
+            <h:panelGroup layout="block" id="imj_pageMessageArea" styleClass="imj_pageMessageArea" rendered="#{MessagesBean.hasMessages}">
+                <h:panelGroup layout="block" styleClass="imj_pageMessageContent">
+
+                    <div class="imj_pageMessageHeader">
+                        <div class="imj_closeMessages"><a href="javascript: void(0);" onclick="$('.imj_pageMessageArea').slideUp();" title="close message box">X</a></div>
+                        <h:panelGroup layout="block" styleClass="imj_messageTitleInfo" rendered="#{!MessagesBean.hasErrorMessages}">#{lbl.info_lblMessageHeader}</h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="imj_messageTitleWarn" rendered="#{MessagesBean.hasErrorMessages}">#{lbl.warning_lblMessageHeader}</h:panelGroup>
+                    </div>
+
+                    <h:messages styleClass="imj_messageList" layout="list" globalOnly="false" showDetail="false" showSummary="true"
+                                errorClass="imj_messageError" warnClass="imj_messageWarn" fatalClass="imj_messageFatal" infoClass="imj_messageInfo fa fa-check"/>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <!-- page wrapper for the whole content -->
             <div class="#{siteWrapperClass}">
                 <ui:insert name="init"/>
                 <ui:include src="component/header/header_default.xhtml"/>
-                
+
                 <div class="imj_menuPanel">
                     <search:simple_search searchBean="#{QuickSearchBean}"/>
                     <menu:working_menu navBean="#{Navigation}" curMainMenu="#{currentMainMenu}" userHasAdminRights="#{Auth.sessionUser.admin}"/>
                 </div>
-                
+
                 <ui:insert name="actionsMenu"/>
                 <h:panelGroup layout="block" styleClass="imj_siteContentHeadline" rendered="#{headline.toString().trim().length() > 0}">
                     <h1>
@@ -66,45 +82,6 @@ All rights reserved. Use is subject to license terms.
                     </h1>
                 </h:panelGroup>
 
-                <h:panelGroup id="imj_pageMessageArea">
-                    <h:panelGroup layout="block" styleClass="imj_pageMessageArea" rendered="#{MessagesBean.hasMessages or (SessionBean.activeAlbum != null and HistorySession.currentPage.title != 'help')}">
-
-                        <ui:fragment rendered="#{MessagesBean.hasMessages}">
-                            <ui:fragment rendered="#{MessagesBean.numberOfMessages == 1}">
-                                <h:messages styleClass="imj_messageList"
-                                            errorClass="imj_messageError" warnClass="imj_messageWarn" fatalClass="imj_messageFatal" infoClass="imj_messageInfo" 
-                                            layout="list" globalOnly="false" showDetail="false" showSummary="true"/>
-                            </ui:fragment>
-
-                            <ui:fragment rendered="#{MessagesBean.numberOfMessages != 1}">
-                                <ui:fragment rendered="#{MessagesBean.hasErrorMessages}">
-                                    <div class="imj_messageTitleWarn"><h:outputText value="#{lbl.warning_lblMessageHeader}"/></div>
-                                    <h:messages styleClass="imj_messageList"
-                                                errorClass="imj_messageError" warnClass="imj_messageWarn" fatalClass="imj_messageFatal" infoClass="imj_messageInfo" 
-                                                layout="list" globalOnly="false" showDetail="false" showSummary="true"/>
-                                </ui:fragment>
-
-                                <ui:fragment rendered="#{!MessagesBean.hasErrorMessages}">
-                                    <div class="imj_messageTitleInfo"><h:outputText value="#{lbl.info_lblMessageHeader}"/></div>
-                                    <h:messages styleClass="imj_messageList"
-                                                errorClass="imj_messageError" warnClass="imj_messageWarn" fatalClass="imj_messageFatal" infoClass="imj_messageInfo" 
-                                                layout="list" globalOnly="false" showDetail="false" showSummary="true"/>
-                                </ui:fragment>
-                            </ui:fragment>
-                        </ui:fragment>
-
-                        <ui:fragment rendered="#{SessionBean.activeAlbum != null and HistorySession.currentPage.title != 'help'}">
-                            <h:panelGroup id="preListHeaderActiveAlbum1" layout="block" styleClass="imj_messageStatus">
-                                <h:outputText value="#{lbl.active_album}: "/>
-                                <h:outputLink value="#{Navigation.albumUrl}#{SessionBean.activeAlbumId}/#{Navigation.browsePath}">
-                                    <h:outputText value="#{SessionBean.activeAlbum.metadata.title} (#{SessionBean.activeAlbumSize})"/>
-                                </h:outputLink>
-                            </h:panelGroup>
-                        </ui:fragment>
-                    </h:panelGroup>
-                </h:panelGroup>
-
-
                 <div class="imj_mainContentWrapper">
                     <ui:insert name="searchQuery"/>
                     <ui:insert name="mainContent"/>
@@ -112,6 +89,7 @@ All rights reserved. Use is subject to license terms.
 
                 <ui:include src="component/footer/footer_default.xhtml"/>
             </div>
+
 
             <div class="imj_modalDialogBackground">&#160;</div>
 
