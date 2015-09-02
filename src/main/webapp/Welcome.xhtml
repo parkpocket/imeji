@@ -73,9 +73,17 @@
 				//jQuery("#carousel a").removeAttr("title");
 			}
 			
+            function hideWelcomeMessage(element) {
+                element.slideUp();
+            }
+            
 			function initStartpage() {
 				jQuery( ".id_tabs" ).tabs();
 				createCarousel();
+                var msgCtnr = $('.imj_pageMessageArea');
+                if (msgCtnr.length > 0) {
+                    setTimeout(hideWelcomeMessage, 3000, msgCtnr);
+                }
 			};
 		</script>
 	</ui:define>
