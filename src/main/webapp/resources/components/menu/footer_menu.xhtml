@@ -1,0 +1,146 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+    <composite:interface>
+        <!-- composite:attribute name="navBean" type="java.lang.Object" required="true" shortDescription="@type: Object, used for several URL paths"/>
+        <composite:attribute name="curMainMenu" type="java.lang.String" default="" required="true" shortDescription="@type String, required for menu highlight and to en-/disable upload and or ingest if user has rights"/>
+        <composite:attribute name="userHasAdminRights" type="java.lang.Boolean" default="false" required="false" shortDescription="@type: Boolean, @dependencies: curMainMenu, required for ingest"/ -->
+    </composite:interface>
+
+    <composite:implementation>
+
+        <ul class="imj_footerMenu">
+            <li class="imj_headline">Pages</li>
+            <li><a href="#" title="">Startpage</a></li>
+            <li><a href="#" title="">Discover</a></li>
+            <li><a href="#" title="">About {s}pot</a></li>
+
+            <ui:fragment rendered="#{Auth.loggedIn}">
+                <li class="#{ (cc.attrs.curMainMenu == 'folder') ? 'imj_active' : ''}">
+                    <!-- TODO: Label and Title -->
+                    <h:outputLink id="lnkCollections" title="Folder" value="#{cc.attrs.navBean.collectionsUrl}?q=">
+                        <span class="imj_iconItemFolder fa fa-folder">&#160;</span><h:outputText value="Folder"/>
+                    </h:outputLink>
+                </li>
+                <li class="#{ (cc.attrs.curMainMenu == 'album') ? 'imj_active' : ''}">
+                    <h:outputLink id="lnkAlbums" title="#{lbl.goto_albums}" value="#{cc.attrs.navBean.albumsUrl}?q=">
+                        <span class="imj_iconItemAlbum fa fa-book">&#160;</span><h:outputText value="#{lbl.header_albums}"/>
+                    </h:outputLink>
+                </li>
+                <li class="#{ (cc.attrs.curMainMenu == 'mdprofile') ? 'imj_active' : ''}">
+                    <!-- TODO: LINK with Label and Title -->
+                    <a href="javascript: return false;" title=""><span class="imj_iconItemAlbum fa fa-list-alt">&#160;</span>Metadata Profile</a>
+                </li>
+            </ui:fragment>
+        </ul>
+
+        <ui:fragment rendered="#{Auth.loggedIn}">
+        <ul class="imj_footerMenu">
+            <li class="imj_headline">
+                <!-- TODO: Label -->New
+            </li>
+            <li>
+                <!-- TODO: Label and Title -->
+                <!-- TODO: Fix Link to the right target -->
+                <h:outputLink value="#{cc.attrs.navBean.createCollectionUrl}?reset=1" title="Create Folder">
+                    <h:outputText value="Create Folder"/>
+                </h:outputLink>
+            </li>
+            <li>
+                <h:outputLink value="#{cc.attrs.navBean.createAlbumUrl}" title="#{lbl.album_create}">
+                    <h:outputText value="#{lbl.album_create}"/>
+                </h:outputLink>
+            </li>
+            <li>
+                <!-- TODO: Label and Title -->
+                <!-- TODO: Fix Link to the right Upload -->
+                <h:outputLink id="lnkUpload" title="#{lbl.goto_upload}" value="#{cc.attrs.navBean.singleUploadUrl}?init=1">
+                    <h:outputText value="#{lbl.header_upload} Data"/>
+                </h:outputLink>
+            </li>
+            <li>
+                <!-- TODO: LINK with Label and Title -->
+                <a href="javascript: return false;" title="">Create Metadata Profile</a>
+            </li>
+            <ui:fragment rendered="#{cc.attrs.userHasAdminRights}">
+                <li><hr/></li> <!-- separator for admin actions -->
+                <li>
+                    <a href="#{cc.attrs.navBean.applicationSpaceUrl}createuser" title="#{lbl.admin_user_new}">
+                        <h:outputText value="#{lbl.admin_user_new}"/>
+                    </a>
+                </li>
+                <li>
+                    <a href="#{cc.attrs.navBean.applicationSpaceUrl}createusergroup" title="#{lbl.admin_group_new}">
+                        <h:outputText value="#{lbl.admin_userGroup_new}" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#{cc.attrs.navBean.applicationUrl}createspace" title="#{lbl.admin_space_create}">
+                        <h:outputText value="#{lbl.admin_space_create}"/>
+                    </a>
+                </li>
+            </ui:fragment>
+        </ul>
+        </ui:fragment>
+
+        <ul class="imj_footerMenu">
+            <li class="imj_headline">Research data (RD)</li>
+            <li><a href="#" title="">What are RD</a></li>
+            <li><a href="#" title="">Manage RD</a></li>
+            <li><a href="#" title="">Lifecycle of RD</a></li>
+            <li><a href="#" title="">Citability of RD</a></li>
+            <li><a href="#" title="">Privacy of RD</a></li>
+            <li><a href="#" title="">Team and project working</a></li>
+        </ul>
+        <ul class="imj_footerMenu">
+            <li class="imj_headline">Support</li>
+            <li><a href="#" title="">Pricing</a></li>
+            <li><a href="#" title="">Quota</a></li>
+            <li><a href="#" title="">Press</a></li>
+            <li><a href="#" title="">Contact</a></li>
+        </ul>
+        <ul class="imj_footerMenu">
+            <li class="imj_headline">Links</li>
+            <li><a href="#" title="">Max Planck Society</a></li>
+            <li><a href="#" title="">Max Planck Digital Library</a></li>
+        </ul>
+
+        <ul class="imj_footerMenu">
+            <li class="imj_headline">Legal</li>
+            <li>
+                <h:outputLink title="#{lbl.imprint}" target="_blank" value="#{Configuration.impressumUrl}" rendered="#{Configuration.impressumText==''}">
+                    <h:outputText value="#{lbl.imprint}" />
+                </h:outputLink>
+                <h:outputLink title="#{lbl.imprint}" target="_blank" value="#{Navigation.applicationSpaceUrl}imprint" rendered="#{Configuration.impressumText!=''}">
+                    <h:outputText value="#{lbl.imprint}" />
+                </h:outputLink>
+            </li>
+            <li><a href="#" title="">Disclaimer</a></li>
+        </ul>
+
+        <ul class="imj_footerMenu imj_singleLine">
+            <li class="imj_headline">Powered by</li>
+
+            <ui:fragment rendered="#{Configuration.startPageFooterLogos != ''}">
+                <li>
+                    <h:outputText value="#{Configuration.startPageFooterLogos}" escape="false"/>
+                </li>
+            </ui:fragment>
+
+            <ui:fragment rendered="#{Configuration.startPageFooterLogos == ''}">
+                <li>
+                    <a href="http://imeji.org" title="imeji community" target="_blank">
+                        <img alt="imeji community logo" src="#{Navigation.applicationUrl}resources/icon/imeji_community_bright.png" height="50em" class="imj_community_logo"/>
+                    </a>
+                </li>
+                <li><a href="http://mpdl.mpg.de" title="Max Planck Digital Library" target="_blank">
+                        <img class="imj_community_logo" height="50em" src="https://spot.mpdl.mpg.de/static/style/mpdl.png" alt="MPDL logo"/>
+                    </a>
+                </li>
+            </ui:fragment>
+        </ul>
+
+    </composite:implementation>
+</html>
